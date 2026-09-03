@@ -1,3 +1,4 @@
+import http from 'http';
 import {
   Client,
   GatewayIntentBits,
@@ -11,6 +12,16 @@ import {
 } from 'discord.js';
 import { config } from './config.js';
 import { createTicket, getOpenTicketByUser, closeTicket } from './db.js';
+
+// Prosty serwer HTTP wymagany przez Render (Web Service)
+const server = http.createServer((req, res) => {
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  res.end('Bot is running!');
+});
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+  console.log(`🌐 Serwer HTTP nasłuchuje na porcie ${PORT}`);
+});
 
 const client = new Client({
   intents: [GatewayIntentBits.Guilds],
